@@ -1,0 +1,285 @@
+<div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
+  <!-- Gallery -->
+  <div class="grid gap-4">
+    <div>
+      <img
+        class="h-auto max-w-full rounded-lg"
+        [src]="data?.images[0]"
+        [alt]="data?.title + 'image'"
+      />
+    </div>
+    <div class="grid grid-cols-4 gap-4">
+      @for (imageSrc of data?.images; track imageSrc) {
+        <div>
+          <img
+            class="h-auto max-w-full rounded-lg border"
+            [src]="imageSrc"
+            alt=""
+          />
+        </div>
+      }
+    </div>
+  </div>
+  <!--** Details **-->
+  <div class="divide-y divide-green-200">
+    <!-- Title -->
+    <div class="pb-4">
+      <h1 class="mb-4 text-4xl font-bold text-green-950">{{ data?.title }}</h1>
+      <p class="mb-3 text-green-500">
+        <span class="font-semibold uppercase text-green-800">
+          {{ data?.category }}
+        </span>
+        |
+        <span class="capitalize text-green-600">
+          {{ data?.brand || "Generic" }}
+        </span>
+      </p>
+      <p class="mb-3 tracking-wide text-gray-500">
+        {{ data?.description }}
+      </p>
+
+      <!-- Rating -->
+      <div class="flex items-center gap-1">
+        <app-star-rating
+          [rating]="data.rating"
+          [totalStars]="5"
+        ></app-star-rating>
+
+        <span class="ml-1 text-green-300">{{ data.rating }}</span>
+      </div>
+    </div>
+    <!-- Price -->
+    <div class="py-6">
+      @if (data?.discountPercentage) {
+        <h2 class="mb-3 space-x-1 font-semibold">
+          <span class="text-4xl text-green-800">
+            {{
+              data?.price
+                | discount: data?.discountPercentage
+                | currency: "USD" : "symbol" : "1.2-2"
+            }}
+          </span>
+          <span class="text-lg text-gray-400"> instead of </span>
+          <span class="text-lg text-red-800 line-through">
+            {{ data?.price | currency: "USD" : "symbol" : "1.2-2" }}
+          </span>
+        </h2>
+        <p class="italic text-gray-500">Limited time offer</p>
+      } @else {
+        <h2 class="mb-3 text-4xl font-semibold">
+          {{ data?.price | currency: "USD" : "symbol" : "1.2-2" }}
+        </h2>
+      }
+    </div>
+    <!-- stock badge -->
+    <div class="space-y-4 py-6">
+      @if (data?.stock > 0) {
+        <span
+          class="text-md inline-block rounded-full bg-green-100 px-4 py-1 font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+          >In stock</span
+        >
+      } @else {
+        <span
+          class="text-md inline-block rounded-full bg-red-100 px-4 py-1 font-medium text-red-800 dark:bg-red-900 dark:text-red-300"
+          >Out of stock</span
+        >
+      }
+      <!-- Info -->
+      <div class="grid grid-cols-1 place-content-start gap-y-8 xl:grid-cols-2">
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-green-800">
+              <svg
+                class="h-6 w-6"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 3v4a1 1 0 0 1-1 1H5m8-2h3m-3 3h3m-4 3v6m4-3H8M19 4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM8 12v6h8v-6H8Z"
+                />
+              </svg>
+            </span>
+            <span class="text-green-600">{{ data.warrantyInformation }}</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-green-800">
+              <svg
+                class="inline-block h-6 w-6"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                />
+              </svg>
+            </span>
+            <span class="text-green-600">{{ data.shippingInformation }}</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-green-800">
+              <svg
+                class="h-6 w-6"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"
+                />
+              </svg>
+            </span>
+            <span class="text-green-600">{{ data.returnPolicy }}</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-green-800">
+              <svg
+                class="h-6 w-6"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5.005 11.19V12l6.998 4.042L19 12v-.81M5 16.15v.81L11.997 21l6.998-4.042v-.81M12.003 3 5.005 7.042l6.998 4.042L19 7.042 12.003 3Z"
+                />
+              </svg>
+            </span>
+            <span class="text-green-600"
+              >{{ data.minimumOrderQuantity }} items to start an order</span
+            >
+          </div>
+        </div>
+        <div class="space-y-6">
+          <!-- Table -->
+          <div class="relative overflow-x-auto rounded-sm">
+            <table
+              class="w-[65%] text-left text-sm text-green-500 dark:text-green-400 rtl:text-right"
+            >
+              <thead
+                class="bg-green-50 text-xs uppercase text-green-700 dark:bg-green-700 dark:text-green-400"
+              >
+                <tr>
+                  <th scope="col" class="px-6 py-3">Width</th>
+                  <th scope="col" class="px-6 py-3">Height</th>
+                  <th scope="col" class="px-6 py-3">Depth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b bg-white dark:border-green-700 dark:bg-green-800"
+                >
+                  <td class="px-6 py-4">{{ data.dimensions.width }}</td>
+                  <td class="px-6 py-4">{{ data.dimensions.height }}</td>
+                  <td class="px-6 py-4">{{ data.dimensions.depth }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Tags -->
+
+          <div class="flex flex-wrap items-center gap-4">
+            <p class="text-md text-green-800">Tags</p>
+            @for (tag of data?.tags; track tag) {
+              <span
+                class="inline-block rounded-lg border border-green-800 bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
+                >{{ tag }}</span
+              >
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Select quantity button group + stock count -->
+    <div
+      class="flex flex-wrap-reverse items-center justify-center gap-6 py-6 sm:justify-start"
+    >
+      <div class="flex w-full justify-center sm:w-fit">
+        <span
+          class="inline-flex select-none items-center gap-8 rounded-full border border-green-300 bg-green-50 px-8 font-medium text-green-900 focus:outline-none focus:ring-4 focus:ring-green-100 dark:border-green-600 dark:bg-green-800 dark:text-white dark:focus:ring-green-700"
+        >
+          <span
+            (click)="counterDecrement()"
+            role="button"
+            type="button"
+            class="cursor-pointer text-5xl font-light"
+            >-</span
+          >
+          <span class="text-xl">{{ counter }}</span>
+          <span
+            (click)="counterIncrement()"
+            role="button"
+            type="button"
+            class="cursor-pointer text-3xl font-light"
+            >+</span
+          >
+        </span>
+      </div>
+
+      <div aria-label="paragraph" class="flex gap-2 md:flex-col">
+        @if (data?.stock > 0) {
+          <span>
+            Only
+            <span class="font-bold text-orange-500">{{ data?.stock }}</span>
+            Left.
+          </span>
+          <span> Don't miss it! </span>
+        } @else {
+          <span class="font-bold italic text-gray-400"
+            >Currently unavailable</span
+          >
+        }
+      </div>
+    </div>
+    <div
+      class="mx-auto flex w-[65%] flex-wrap items-center gap-4 py-6 sm:w-[100%] md:mx-0 md:w-[75%] 2xl:w-[50%]"
+    >
+      <button
+        type="button"
+        class="min-w-[50%] flex-1 rounded-full border border-green-700 bg-green-700 px-5 py-2.5 text-center text-lg font-medium text-white duration-150 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 sm:min-w-max xl:border-2 xl:px-7 xl:text-xl"
+      >
+        Buy now
+      </button>
+
+      <button
+        type="button"
+        class="min-w-[50%] flex-1 rounded-full border border-green-700 px-5 py-2.5 text-center text-lg font-medium text-green-700 duration-150 hover:bg-green-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-800 sm:min-w-max xl:border-2 xl:px-7 xl:text-xl"
+      >
+        Add to cart
+      </button>
+    </div>
+    <div>&nbsp;</div>
+    <!-- CTAs => Buy now & Add to Cart -->
+  </div>
+</div>
