@@ -1,21 +1,19 @@
 <div class="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
   <!-- Gallery -->
   <div class="grid gap-4">
-    <div>
+    <div class="flex items-center justify-center">
       <img
-        class="h-auto max-w-full rounded-lg"
+        class="h-full max-w-full rounded-lg"
         [src]="data?.images[0]"
         [alt]="data?.title + 'image'"
       />
     </div>
     <div class="grid grid-cols-4 gap-4">
       @for (imageSrc of data?.images; track imageSrc) {
-        <div>
-          <img
-            class="h-auto max-w-full rounded-lg border"
-            [src]="imageSrc"
-            alt=""
-          />
+        <div
+          class="flex max-h-44 items-center justify-center rounded-lg border object-contain p-4"
+        >
+          <img class="h-full max-w-full" [src]="imageSrc" alt="" />
         </div>
       }
     </div>
