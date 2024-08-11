@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { CartItem, CartService } from './../services/cart.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { IProduct } from '../dummyDataInterfaces';
 import { CommonModule } from '@angular/common';
 import { DiscountPipe } from '../pipes/discount.pipe';
@@ -17,22 +18,48 @@ import { ProductRequestsService } from '../services/product-requests.service';
     ProductReviewsComponent,
   ],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.css',
+  styleUrls: ['./product-details.component.css'],
 })
-export class ProductDetailsComponent {
-  data!: any;
+export class ProductDetailsComponent implements OnInit {
+  data!: IProduct;
+  cartItems: CartItem[] = [];
+  quantity: number = 1;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private productRequestsService: ProductRequestsService,
+    private cartService: CartService,
   ) {}
+
+  onAddToCart() {
+    this.cartService.addToCart(this.data, this.quantity);
+  }
+
+  decreaseQuantity() {
+    if (this.quantity > 0) {
+      this.quantity--;
+      this.cartService.updateQuantity(this.data.id, this.quantity);
+    }
+  }
+
+  increaseQuantity() {
+    if (this.quantity < this.data.stock) {
+      this.quantity++;
+      this.cartService.updateQuantity(this.data.id, this.quantity);
+    }
+  }
 
   ngOnInit() {
     const routeId = this.activatedRoute.snapshot.params['id'];
     this.productRequestsService
       .getProductDetails(routeId)
-      .subscribe((product) => {
+      .subscribe((product: any) => {
         this.data = product;
+        this.quantity = this.cartService.getQuantity(this.data.id);
       });
+
+    this.cartService.getItems().subscribe((items) => {
+      this.cartItems = items;
+    });
   }
 }

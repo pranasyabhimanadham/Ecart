@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../dummyDataInterfaces';
+import { BehaviorSubject } from 'rxjs';
 
 export interface CartItem {
   product: IProduct;
@@ -10,35 +11,54 @@ export interface CartItem {
   providedIn: 'root',
 })
 export class CartService {
-  private items: CartItem[] = [];
+  private items = new BehaviorSubject<CartItem[]>([]);
 
   addToCart(product: IProduct, quantity: number = 1) {
-    const existingItem = this.items.find(
-      (item) => item.product.id === product.id,
-    );
-    if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      this.items.push({ product, quantity });
+    const updatedItems = this.items.value.map((item) => {
+      if (item.product.id === product.id) {
+        const newQuantity = item.quantity + quantity;
+        return {
+          ...item,
+          quantity:
+            newQuantity > item.product.stock ? item.product.stock : newQuantity,
+        };
+      }
+      return item;
+    });
+
+    if (!updatedItems.find((item) => item.product.id === product.id)) {
+      updatedItems.push({ product, quantity });
     }
+
+    this.items.next(updatedItems);
   }
 
   updateQuantity(productId: number, quantity: number) {
-    const item = this.items.find((item) => item.product.id === productId);
-    if (item) {
-      item.quantity = quantity;
-    }
+    const updatedItems = this.items.value.map((item) => {
+      if (item.product.id === productId) {
+        return {
+          ...item,
+          quantity:
+            quantity > item.product.stock ? item.product.stock : quantity,
+        };
+      }
+      return item;
+    });
+
+    this.items.next(updatedItems);
   }
 
-  getItems(): CartItem[] {
-    return this.items;
+  getItems() {
+    return this.items.asObservable();
   }
-
+  getQuantity(productId: number): number {
+    const item = this.items.value.find((item) => item.product.id === productId);
+    return item ? item.quantity : 0;
+  }
   removeItem(productId: number) {
-    this.items = this.items.filter((item) => item.product.id !== productId);
-  }
-
-  clearCart() {
-    this.items = [];
+    const updatedItems = this.items.value.filter(
+      (item) => item.product.id !== productId,
+    );
+    this.items.next(updatedItems);
   }
 }

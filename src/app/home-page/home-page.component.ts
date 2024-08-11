@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { IProductRequest } from '../dummyDataInterfaces';
-import { dummyData } from '../dummyData';
+import { IProduct, IProductRequest } from '../dummyDataInterfaces';
 import { ProductRequestsService } from '../services/product-requests.service';
+import { CartItem, CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-home-page',
@@ -13,8 +13,12 @@ import { ProductRequestsService } from '../services/product-requests.service';
 })
 export class HomePageComponent {
   products: any;
+  items: CartItem[] = [];
 
-  constructor(private productRequestsService: ProductRequestsService) {}
+  constructor(
+    private productRequestsService: ProductRequestsService,
+    private cartService: CartService,
+  ) {}
 
   ngOnInit() {
     this.productRequestsService
@@ -22,5 +26,14 @@ export class HomePageComponent {
       .subscribe((data: IProductRequest) => {
         this.products = data.products;
       });
+
+    this.cartService.getItems().subscribe((items) => {
+      this.items = items;
+    });
+  }
+
+  onAddToCart(product: IProduct) {
+    const quantity: number = 1;
+    this.cartService.addToCart(product, quantity);
   }
 }

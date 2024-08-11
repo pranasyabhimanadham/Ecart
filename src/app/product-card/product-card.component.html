@@ -56,10 +56,17 @@
       >
 
       <button
+        (click)="onAddingToCart()"
         type="button"
-        class="rounded-lg border border-green-700 px-5 py-2.5 text-center text-sm font-medium text-green-700 duration-200 hover:bg-green-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-800"
+        [disabled]="isAdded"
+        [ngClass]="
+          isAdded
+            ? 'bg-green-600 text-green-50'
+            : 'border-green-700 text-green-700 hover:bg-green-800 hover:text-white focus:ring-green-300'
+        "
+        class="rounded-lg border px-5 py-2.5 text-center text-sm font-medium duration-200 focus:outline-none focus:ring-4"
       >
-        Add to cart
+        {{ isAdded ? "Added to cart!" : "Add to cart" }}
       </button>
     </div>
   </div>

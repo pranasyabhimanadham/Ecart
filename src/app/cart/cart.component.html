@@ -1,8 +1,21 @@
 @if (data.length > 0) {
-  <div class="grid grid-cols-1 gap-y-6 xl:grid-cols-2">
-    @for (data of data; track data.id) {
-      <app-cart-item [data]="data"></app-cart-item>
-    }
+  <div>
+    <div class="mb-8">
+      <h4 class="text-2xl font-semibold text-green-800">
+        Total:
+        <span class="ms-4">{{ totalPrice | currency: "USD" }}</span>
+      </h4>
+    </div>
+    <div class="grid grid-cols-1 gap-y-6 xl:grid-cols-2">
+      @for (cartItem of data; track cartItem.product.id) {
+        <app-cart-item
+          [cartItem]="cartItem"
+          [index]="$index"
+          (quantityChangeEmitter)="updateQuantity($event)"
+          (deleteItemEmitter)="deleteItem($event)"
+        />
+      }
+    </div>
   </div>
 } @else {
   <div

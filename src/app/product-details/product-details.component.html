@@ -4,12 +4,12 @@
     <div class="flex items-center justify-center">
       <img
         class="h-full max-w-full rounded-lg"
-        [src]="data?.images[0]"
-        [alt]="data?.title + 'image'"
+        [src]="data.images[0]"
+        [alt]="data.title + 'image'"
       />
     </div>
     <div class="grid grid-cols-4 gap-4">
-      @for (imageSrc of data?.images; track imageSrc) {
+      @for (imageSrc of data.images; track imageSrc) {
         <div
           class="flex max-h-44 items-center justify-center rounded-lg border object-contain p-4"
         >
@@ -22,56 +22,53 @@
   <div class="divide-y divide-green-200">
     <!-- Title -->
     <div class="pb-4">
-      <h1 class="mb-4 text-4xl font-bold text-green-950">{{ data?.title }}</h1>
+      <h1 class="mb-4 text-4xl font-bold text-green-950">{{ data.title }}</h1>
       <p class="mb-3 text-green-500">
         <span class="font-semibold uppercase text-green-800">
-          {{ data?.category }}
+          {{ data.category }}
         </span>
         |
         <span class="capitalize text-green-600">
-          {{ data?.brand || "Generic" }}
+          {{ data.brand || "Generic" }}
         </span>
       </p>
       <p class="mb-3 tracking-wide text-gray-500">
-        {{ data?.description }}
+        {{ data.description }}
       </p>
 
       <!-- Rating -->
       <div class="flex items-center gap-1">
-        <app-star-rating
-          [rating]="data.rating"
-          [totalStars]="5"
-        ></app-star-rating>
+        <app-star-rating [rating]="data.rating || 0" [totalStars]="5" />
 
         <span class="ml-1 text-green-300">{{ data.rating }}</span>
       </div>
     </div>
     <!-- Price -->
     <div class="py-6">
-      @if (data?.discountPercentage) {
+      @if (data.discountPercentage) {
         <h2 class="mb-3 space-x-1 font-semibold">
           <span class="text-4xl text-green-800">
             {{
-              data?.price
-                | discount: data?.discountPercentage
+              data.price
+                | discount: data.discountPercentage
                 | currency: "USD" : "symbol" : "1.2-2"
             }}
           </span>
           <span class="text-lg text-gray-400"> instead of </span>
           <span class="text-lg text-red-800 line-through">
-            {{ data?.price | currency: "USD" : "symbol" : "1.2-2" }}
+            {{ data.price | currency: "USD" : "symbol" : "1.2-2" }}
           </span>
         </h2>
         <p class="italic text-gray-500">Limited time offer</p>
       } @else {
         <h2 class="mb-3 text-4xl font-semibold">
-          {{ data?.price | currency: "USD" : "symbol" : "1.2-2" }}
+          {{ data.price | currency: "USD" : "symbol" : "1.2-2" }}
         </h2>
       }
     </div>
     <!-- stock badge -->
     <div class="space-y-4 py-6">
-      @if (data?.stock > 0) {
+      @if (data.stock > 0) {
         <span
           class="text-md inline-block rounded-full bg-green-100 px-4 py-1 font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
           >In stock</span
@@ -209,7 +206,7 @@
 
           <div class="flex flex-wrap items-center gap-4">
             <p class="text-md text-green-800">Tags</p>
-            @for (tag of data?.tags; track tag) {
+            @for (tag of data.tags; track tag) {
               <span
                 class="inline-block rounded-lg border border-green-800 bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300"
                 >{{ tag }}</span
@@ -231,23 +228,25 @@
             role="button"
             type="button"
             class="cursor-pointer text-5xl font-light"
+            (click)="decreaseQuantity()"
             >-</span
           >
-          <span class="text-xl">0</span>
+          <span class="text-xl">{{ quantity }}</span>
           <span
             role="button"
             type="button"
             class="cursor-pointer text-3xl font-light"
+            (click)="increaseQuantity()"
             >+</span
           >
         </span>
       </div>
 
       <div aria-label="paragraph" class="flex gap-2 md:flex-col">
-        @if (data?.stock > 0) {
+        @if (data.stock > 0) {
           <span>
             Only
-            <span class="font-bold text-orange-500">{{ data?.stock }}</span>
+            <span class="font-bold text-orange-500">{{ data.stock }}</span>
             Left.
           </span>
           <span> Don't miss it! </span>
@@ -269,6 +268,7 @@
       </button>
 
       <button
+        (click)="onAddToCart()"
         type="button"
         class="min-w-[50%] flex-1 rounded-full border border-green-700 px-5 py-2.5 text-center text-lg font-medium text-green-700 duration-150 hover:bg-green-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-300 dark:border-green-500 dark:text-green-500 dark:hover:bg-green-600 dark:hover:text-white dark:focus:ring-green-800 sm:min-w-max xl:border-2 xl:px-7 xl:text-xl"
       >
