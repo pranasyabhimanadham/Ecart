@@ -1,5 +1,5 @@
 import { CartItem, CartService } from './../services/cart.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IProduct } from '../dummyDataInterfaces';
 import { CommonModule } from '@angular/common';
 import { DiscountPipe } from '../pipes/discount.pipe';
@@ -29,10 +29,12 @@ export class ProductDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private productRequestsService: ProductRequestsService,
     private cartService: CartService,
+    private router: Router,
   ) {}
 
   onAddToCart() {
     this.cartService.addToCart(this.data, this.quantity);
+    this.router.navigate(['/cart']);
   }
 
   decreaseQuantity() {
