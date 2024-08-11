@@ -1,0 +1,23 @@
+@if (data.length > 0) {
+  <div class="grid grid-cols-1 gap-y-6 xl:grid-cols-2">
+    @for (data of data; track data.id) {
+      <app-cart-item [data]="data"></app-cart-item>
+    }
+  </div>
+} @else {
+  <div
+    class="flex min-h-[70dvh] w-full flex-col items-center justify-center gap-6"
+  >
+    <div class="w-64">
+      <img src="empty-cart.png" alt="empty cart" />
+    </div>
+    <p class="text-2xl text-green-900">
+      Please start adding items by visiting home page.
+    </p>
+    <a
+      routerLink="/"
+      class="inline-block rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300"
+      >Home</a
+    >
+  </div>
+}

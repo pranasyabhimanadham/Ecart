@@ -1,0 +1,41 @@
+<div class="grid grid-cols-1 gap-4 rounded-lg border border-green-400 p-6">
+  <!-- Left Section -->
+  <div class="flex items-start justify-between">
+    <!-- User Info -->
+    <div class="flex items-start gap-6">
+      <!-- Avatar -->
+      <div
+        class="relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600"
+      >
+        <svg
+          class="absolute -left-1 h-12 w-12 text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </div>
+      <!-- Name & Date -->
+      <div class="space-y-0">
+        <h2 class="text-lg font-semibold text-green-800">
+          {{ review.reviewerName }}
+        </h2>
+        <p class="text-sm text-green-400">
+          {{ review.date | date: "mediumDate" }}
+        </p>
+      </div>
+    </div>
+    <!-- Rating -->
+    <p class="flex items-center gap-2">
+      <app-star-rating [rating]="review.rating"></app-star-rating>
+      <span class="text-sm text-green-500">({{ review.rating }})</span>
+    </p>
+  </div>
+  <!-- Review comment -->
+  <p>{{ review.comment }}</p>
+</div>

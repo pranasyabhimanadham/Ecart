@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IData } from '../dummyDataInterfaces';
+import { IProduct } from '../dummyDataInterfaces';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
@@ -12,5 +12,5 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent {
-  @Input() product!: IData;
+  @Input() product!: IProduct;
 }

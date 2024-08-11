@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input {
+  @apply block w-full rounded-lg border border-green-300 bg-green-50 p-2.5 text-sm text-green-900 focus:border-green-500 focus:ring-green-500;
+}
+.label {
+  @apply mb-2 block text-sm font-medium text-green-900;
+}
+.form {
+  @apply mx-auto w-full rounded-lg border border-green-500 p-6 lg:w-2/3 xl:w-1/2;
+}
+.btn-submit {
+  @apply rounded-lg bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300;
+}
+.form-header {
+  @apply mb-16 inline-block border-b border-green-500 pb-4 pr-12 text-4xl font-semibold text-green-900;
+}

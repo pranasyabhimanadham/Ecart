@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { IData } from '../dummyDataInterfaces';
+import { IProductRequest } from '../dummyDataInterfaces';
 import { dummyData } from '../dummyData';
+import { ProductRequestsService } from '../services/product-requests.service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,9 +12,15 @@ import { dummyData } from '../dummyData';
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent {
-  products: IData[];
+  products: any;
 
-  constructor() {
-    this.products = dummyData;
+  constructor(private productRequestsService: ProductRequestsService) {}
+
+  ngOnInit() {
+    this.productRequestsService
+      .getProductsList()
+      .subscribe((data: IProductRequest) => {
+        this.products = data.products;
+      });
   }
 }

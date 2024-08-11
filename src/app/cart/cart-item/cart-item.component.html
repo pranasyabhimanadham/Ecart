@@ -1,0 +1,91 @@
+<div class="grid grid-cols-[1fr,2fr] gap-4 md:grid-cols-[max-content,1fr]">
+  <!-- Col 1 -->
+  <div class="w-full max-w-48">
+    <img [src]="data.thumbnail" class="rounded-xl border bg-green-50" />
+  </div>
+  <!-- Col 2 -->
+  <div class="space-y-4">
+    <h2 class="text-xl text-green-900">{{ data.title }}</h2>
+    <div class="flex flex-wrap items-center gap-4 text-green-600">
+      <span class="block text-lg">
+        {{
+          data.price
+            | discount: data.discountPercentage || 0
+            | currency: "USD" : "symbol" : "1.2-2"
+        }}
+      </span>
+      <span class="text-green-900">{{ data.shippingInformation }}</span>
+      <span class="rounded-md bg-green-50 px-3 py-1 text-xs">
+        {{ data.availabilityStatus }}
+      </span>
+    </div>
+    <p class="text-green-800">{{ data.returnPolicy }}</p>
+    <!-- CTA -->
+    <div class="flex items-center gap-4">
+      <!-- Delete BTN -->
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-xl border border-green-700 bg-green-50 px-3.5 py-2 text-center text-lg font-medium text-green-700 hover:bg-green-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-green-300"
+      >
+        <svg
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+          />
+        </svg>
+      </button>
+      <!-- Counter -->
+      <div
+        class="inline-flex items-center gap-4 rounded-full border border-green-600 bg-green-50 px-4 py-1 text-xl text-green-600"
+      >
+        <button aria-label="minus-button">
+          <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h14"
+            />
+          </svg>
+        </button>
+        <span>1</span>
+        <button aria-label="plus-button">
+          <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 12h14m-7 7V5"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

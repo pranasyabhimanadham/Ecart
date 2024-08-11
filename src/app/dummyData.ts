@@ -1,6 +1,6 @@
-import { IData } from './dummyDataInterfaces';
+import { IProduct } from './dummyDataInterfaces';
 
-export const dummyData: IData[] = [
+export const dummyData: IProduct[] = [
   {
     id: 1,
     title: 'Essence Mascara Lash Princess',

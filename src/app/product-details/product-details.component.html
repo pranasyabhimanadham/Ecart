@@ -228,15 +228,13 @@
           class="inline-flex select-none items-center gap-8 rounded-full border border-green-300 bg-green-50 px-8 font-medium text-green-900 focus:outline-none focus:ring-4 focus:ring-green-100 dark:border-green-600 dark:bg-green-800 dark:text-white dark:focus:ring-green-700"
         >
           <span
-            (click)="counterDecrement()"
             role="button"
             type="button"
             class="cursor-pointer text-5xl font-light"
             >-</span
           >
-          <span class="text-xl">{{ counter }}</span>
+          <span class="text-xl">0</span>
           <span
-            (click)="counterIncrement()"
             role="button"
             type="button"
             class="cursor-pointer text-3xl font-light"
@@ -280,4 +278,13 @@
     <div>&nbsp;</div>
     <!-- CTAs => Buy now & Add to Cart -->
   </div>
+</div>
+
+<!-- Reviews Section -->
+<div
+  class="grid grid-cols-1 gap-4 sm:mx-4 lg:grid-cols-2 xl:mt-10 xl:grid-cols-3"
+>
+  @for (review of data.reviews; track review.date) {
+    <app-product-reviews [review]="review"></app-product-reviews>
+  }
 </div>

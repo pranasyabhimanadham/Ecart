@@ -4,6 +4,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
+import { CartComponent } from './cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,11 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterPageComponent,
     title: 'Register',
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    title: 'Cart',
   },
   {
     path: '**',

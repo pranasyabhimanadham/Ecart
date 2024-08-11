@@ -1,7 +1,7 @@
 export interface IReview {
   rating: number;
   comment: string;
-  date: Date;
+  date: Date | string;
   reviewerName: string;
   reviewerEmail: string;
 }
@@ -13,13 +13,13 @@ export interface IDimensions {
 }
 
 export interface IMeta {
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   barcode: string;
   qrCode: string;
 }
 
-export interface IData {
+export interface IProduct {
   id: number;
   title: string;
   description: string;
@@ -42,4 +42,11 @@ export interface IData {
   meta: IMeta;
   images: string[];
   thumbnail: string;
+}
+
+export interface IProductRequest {
+  products: IProduct[];
+  total: number;
+  skip: number;
+  limit: number;
 }
