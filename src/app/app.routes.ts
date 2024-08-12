@@ -1,16 +1,17 @@
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginComponent } from './login/login.component';
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { RegisterPageComponent } from './register-page/register-page.component';
+import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
+
 
 export const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
-    title: 'Products app',
+    title: 'E-Cart',
   },
   {
     path: 'details/:id',
@@ -19,12 +20,12 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPageComponent,
+    component: LoginComponent,
     title: 'Login',
   },
   {
     path: 'register',
-    component: RegisterPageComponent,
+    component: RegisterComponent,
     title: 'Register',
   },
   {
